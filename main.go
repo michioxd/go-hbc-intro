@@ -22,8 +22,8 @@ const (
 	screenWidth  = 810
 	screenHeight = 456
 	sampleRate   = 44100
-	loopStart    = 6 * 60  // 6 seconds at 60fps
-	loopEnd      = 21 * 60 // 22 seconds at 60fps
+	loopStart    = 6 * 60
+	loopEnd      = 21 * 60
 )
 
 //go:embed assets/img/*.png
@@ -533,11 +533,11 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 func (g *Game) Update() error {
 	g.count++
 
-	if g.count >= 1 && g.introPlayer != nil && !g.introPlayer.IsPlaying() {
+	if g.count >= 0 && g.introPlayer != nil && !g.introPlayer.IsPlaying() {
 		g.introPlayer.Play()
 	}
 
-	if g.count >= 237 && g.loopPlayer != nil && !g.loopPlayer.IsPlaying() {
+	if g.count >= 248 && g.loopPlayer != nil && !g.loopPlayer.IsPlaying() {
 		g.loopPlayer.Play()
 	}
 
@@ -554,7 +554,7 @@ func (g *Game) Update() error {
 
 func main() {
 	ebiten.SetWindowSize(screenWidth, screenHeight)
-	ebiten.SetWindowTitle("lmao")
+	ebiten.SetWindowTitle("go-hbc-intro")
 	ebiten.SetTPS(60)
 
 	game := NewGame()
