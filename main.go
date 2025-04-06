@@ -23,7 +23,8 @@ const (
 	screenHeight = 456
 	sampleRate   = 44100
 	loopStart    = 6 * 60
-	loopEnd      = 21 * 60
+	loopEnd      = 22 * 60
+	startBoom    = 248
 )
 
 //go:embed assets/img/*.png
@@ -220,7 +221,7 @@ func (g *Game) chooseBubbleType() int {
 func (g *Game) generateBubbles() {
 	g.bubbles = []Bubble{}
 
-	bubbleBoom := 250
+	bubbleBoom := 140
 
 	for i := 0; i < 100; i++ {
 		g.addBubble(bubbleBoom)
@@ -466,16 +467,16 @@ func (g *Game) drawTitle(screen *ebiten.Image) {
 	height := 180.0
 
 	y := 32.0
-	if frame >= 244 {
+	if frame >= startBoom {
 		oscY := math.Sin(float64(frame)/50*2) * 10.0
 		y = 22.0 + oscY
 	}
 
 	alpha := 0.0
-	if frame >= 244 {
+	if frame >= startBoom {
 		alpha = 1.0
-	} else if frame >= 243 {
-		alpha = float64(frame - 243)
+	} else if frame >= startBoom-1 {
+		alpha = float64(frame - startBoom - 1)
 	}
 
 	op := &ebiten.DrawImageOptions{}
@@ -510,10 +511,10 @@ func (g *Game) drawBoom(screen *ebiten.Image) {
 	if !g.introPlayer.IsPlaying() && frame <= 256 {
 		alpha := 0.0
 
-		if frame <= 246 {
+		if frame <= startBoom {
 			alpha = 1.0
 		} else {
-			alpha = 1.0 - float64(frame-246)/10.0
+			alpha = 1.0 - float64(frame-startBoom)/10.0
 		}
 
 		op := &ebiten.DrawImageOptions{}
@@ -537,7 +538,7 @@ func (g *Game) Update() error {
 		g.introPlayer.Play()
 	}
 
-	if g.count >= 248 && g.loopPlayer != nil && !g.loopPlayer.IsPlaying() {
+	if g.count >= startBoom && g.loopPlayer != nil && !g.loopPlayer.IsPlaying() {
 		g.loopPlayer.Play()
 	}
 
