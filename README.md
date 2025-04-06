@@ -4,6 +4,8 @@ The Homebrew Channel banner built with Go and ebiten. I made this for fun and to
 
 It is a simple implementation of the Homebrew Channel banner, which is a homebrew application for the Wii console. The banner is displayed when the application is launched and provides information about the application.
 
+![image](https://github.com/user-attachments/assets/fb293fd1-0fdd-427f-956d-091072e7bd17)
+
 ## Building
 
 ```bash
